@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Paladins';
+    src: url('/fonts/paladins/paladins.ttf');
+}
+
+@font-face {
+    font-family: 'PaladinsGrad';
+    src: url('/fonts/paladins/paladinsgrad.ttf');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

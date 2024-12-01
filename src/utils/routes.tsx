@@ -3,7 +3,13 @@ import RootLayout from "@pages/public/RootLayout.tsx";
 import Home from "@pages/public/Home.tsx";
 import Login from "@pages/public/Login.tsx";
 import Dashboard from "@pages/admin/Dashboard.tsx";
-import ProtectedRoute from "@/utils/ProtectedRoute.tsx";
+import Stream from "@pages/public/Stream.tsx";
+import Contact from "@pages/public/Contact.tsx";
+import AdminLayout from "@pages/admin/AdminLayout.tsx";
+import Admins from "@pages/admin/Admins.tsx";
+import Players from "@pages/admin/Players.tsx";
+import Teams from "@pages/admin/Teams.tsx";
+import Matches from "@pages/admin/Matches.tsx";
 
 export const routes: RouteObject[] = [
   {
@@ -15,7 +21,15 @@ export const routes: RouteObject[] = [
         element: <Home/>
       },
       {
-        path: '/login',
+        path: 'stream',
+        element: <Stream/>
+      },
+      {
+        path: 'contact',
+        element: <Contact/>
+      },
+      {
+        path: 'login',
         element: <Login/>
       },
       {
@@ -24,14 +38,27 @@ export const routes: RouteObject[] = [
       },
       {
         path: '/admin',
+        element: <AdminLayout/>,
         children: [
           {
             path: 'dashboard',
-            element: (
-              <ProtectedRoute>
-                <Dashboard/>
-              </ProtectedRoute>
-            )
+            element: <Dashboard/>
+          },
+          {
+            path: 'admins',
+            element: <Admins/>
+          },
+          {
+            path: 'players',
+            element: <Players/>
+          },
+          {
+            path: 'teams',
+            element: <Teams/>
+          },
+          {
+            path: 'matches',
+            element: <Matches/>
           }
         ]
       }

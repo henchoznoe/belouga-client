@@ -9,7 +9,7 @@ export const useFetch = () => {
 
   const activeHttpRequests = useRef<Record<number, AbortController>>({});
 
-  const sendRequest = useCallback(async (
+  const send = useCallback(async (
     key: number,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     params: string | null,
@@ -68,5 +68,5 @@ export const useFetch = () => {
     };
   }, []);
 
-  return { sendRequest, isLoading, errors };
+  return { send, isLoading, errors };
 };

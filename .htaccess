@@ -1,0 +1,19 @@
+# Activation de mod_rewrite
+RewriteEngine On
+
+# 1. Rediriger les requêtes API vers `api/index.php`
+RewriteCond %{REQUEST_URI} ^/api/ [NC]
+RewriteRule ^api/(.*)$ api/index.php [L,QSA]
+
+# 2. Redirection des routes React vers `index.html`
+# Si le fichier ou dossier n'existe pas, rediriger vers index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+# Activer le contournement pour POST, PUT, DELETE
+RewriteCond %{REQUEST_METHOD} ^(PUT|DELETE|POST)$
+RewriteRule ^ api/index.php [L]
+
+# 3. Désactivation de l'indexation des répertoires
+Options -Indexes

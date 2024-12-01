@@ -1,11 +1,11 @@
 import Heading from "@components/global/Heading.tsx";
 
-const Home = () => {
+const Contact = () => {
   return (
     <>
-      <Heading title="Belouga Tournament"/>
+      <Heading title="Contact"/>
     </>
   );
 }
 
-export default Home;
+export default Contact;

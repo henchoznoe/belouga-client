@@ -11,3 +11,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    outline: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}

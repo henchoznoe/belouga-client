@@ -6,10 +6,10 @@ import Footer from "@components/global/Footer.tsx";
 const RootLayout = () => {
   return (
     <>
-      <header>
+      <header className="sticky top-0 z-50 border !border-b-red-500/80 !border-x-zinc-800 !border-t-zinc-800">
         <Header/>
       </header>
-      <main className="min-h-dvh">
+      <main className="min-h-[calc(100dvh-60px)]">
         <Outlet/>
         <Toaster richColors/>
       </main>

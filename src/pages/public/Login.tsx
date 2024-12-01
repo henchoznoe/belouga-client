@@ -1,7 +1,11 @@
+import Heading from "@components/global/Heading.tsx";
+import LoginForm from "@components/login/LoginForm.tsx";
+
 const Login = () => {
   return (
     <>
-      Login
+      <Heading title="Login"/>
+      <LoginForm />
     </>
   );
 }

@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <>
-      Footer
+      A FAIRE : Pied de page avec réseaux sociaux
     </>
   );
 }

@@ -1,7 +1,11 @@
+import AdminContainer from "@components/global/AdminContainer.tsx";
+
 const Teams = () => {
   return (
     <>
-      Gestion des équipes
+      <AdminContainer title="Equipes">
+        Gestion des équipes
+      </AdminContainer>
     </>
   );
 }

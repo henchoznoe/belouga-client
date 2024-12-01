@@ -2,14 +2,25 @@ import { PropsWithChildren, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from "@/shared/hooks/useAuth.ts";
 
-const ProtectedRoute = ({ children }: PropsWithChildren) => {
+interface ProtectedRouteProps {
+  requiredPermission: number;
+}
 
-  const { isAuthenticated } = useAuth();
+const ProtectedRoute = ({ children, requiredPermission }: PropsWithChildren<ProtectedRouteProps>) => {
+
+  const authCtx = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if ( !isAuthenticated ) navigate('/login', { replace: true });
-  }, [navigate, isAuthenticated]);
+    if ( !authCtx.isAuthenticated ) {
+      navigate('/login', { replace: true });
+      return;
+    }
+
+    if ( authCtx.admin && authCtx.admin.permission < requiredPermission ) {
+      navigate('/admin/dashboard', { replace: true });
+    }
+  }, [authCtx.isAuthenticated, requiredPermission, authCtx.admin, navigate]);
 
   return <>{children}</>;
 };

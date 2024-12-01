@@ -10,6 +10,7 @@ import Admins from "@pages/admin/Admins.tsx";
 import Players from "@pages/admin/Players.tsx";
 import Teams from "@pages/admin/Teams.tsx";
 import Matches from "@pages/admin/Matches.tsx";
+import ProtectedRoute from "@/utils/ProtectedRoute.tsx";
 
 export const routes: RouteObject[] = [
   {
@@ -38,27 +39,51 @@ export const routes: RouteObject[] = [
       },
       {
         path: '/admin',
-        element: <AdminLayout/>,
+        element: (
+          <ProtectedRoute requiredPermission={1}>
+            <AdminLayout/>
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: 'dashboard',
-            element: <Dashboard/>
+            element: (
+              <ProtectedRoute requiredPermission={1}>
+                <Dashboard/>
+              </ProtectedRoute>
+            )
           },
           {
             path: 'admins',
-            element: <Admins/>
+            element: (
+              <ProtectedRoute requiredPermission={2}>
+                <Admins/>
+              </ProtectedRoute>
+            )
           },
           {
             path: 'players',
-            element: <Players/>
+            element: (
+              <ProtectedRoute requiredPermission={1}>
+                <Players/>
+              </ProtectedRoute>
+            )
           },
           {
             path: 'teams',
-            element: <Teams/>
+            element: (
+              <ProtectedRoute requiredPermission={1}>
+                <Teams/>
+              </ProtectedRoute>
+            )
           },
           {
             path: 'matches',
-            element: <Matches/>
+            element: (
+              <ProtectedRoute requiredPermission={1}>
+                <Matches/>
+              </ProtectedRoute>
+            )
           }
         ]
       }

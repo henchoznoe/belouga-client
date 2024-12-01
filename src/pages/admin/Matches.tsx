@@ -1,7 +1,11 @@
+import AdminContainer from "@components/global/AdminContainer.tsx";
+
 const Matches = () => {
   return (
     <>
-      Gestion des matchs
+      <AdminContainer title="Matchs">
+        Gestion des matchs
+      </AdminContainer>
     </>
   );
 }

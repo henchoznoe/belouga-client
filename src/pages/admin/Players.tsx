@@ -1,7 +1,11 @@
+import AdminContainer from "@components/global/AdminContainer.tsx";
+
 const Players = () => {
   return (
     <>
-      Gestion des joueurs
+      <AdminContainer title="Joueurs">
+        Gestion des joueurs
+      </AdminContainer>
     </>
   );
 }

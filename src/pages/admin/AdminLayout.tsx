@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import ProtectedRoute from "@/utils/ProtectedRoute.tsx";
 import useAuth from "@/shared/hooks/useAuth.ts";
 import { cn } from "@/utils/classNames.ts";
 import { ArrowLeftIcon, ArrowLeftStartOnRectangleIcon, Bars3Icon } from "@heroicons/react/24/solid";
@@ -8,6 +7,7 @@ import { ArrowLeftIcon, ArrowLeftStartOnRectangleIcon, Bars3Icon } from "@heroic
 type AdminMenus = {
   label: string;
   to: string;
+  position: number;
 };
 
 const AdminLayout = () => {
@@ -16,13 +16,16 @@ const AdminLayout = () => {
   const loc = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const adminsMenus: AdminMenus[] = [
-    { label: "Dashboard", to: "/admin/dashboard" },
-    { label: "Admins", to: "/admin/admins" },
-    { label: "Joueurs", to: "/admin/players" },
-    { label: "Equipes", to: "/admin/teams" },
-    { label: "Matches", to: "/admin/matches" }
+  const baseMenus: AdminMenus[] = [
+    { label: "Dashboard", to: "/admin/dashboard", position: 1 },
+    { label: "Joueurs", to: "/admin/players", position: 3 },
+    { label: "Equipes", to: "/admin/teams", position: 4 },
+    { label: "Matches", to: "/admin/matches", position: 5 },
   ];
+
+  if ( authCtx.admin?.permission === 2 ) baseMenus.push({ label: "Admins", to: "/admin/admins", position: 2 });
+
+  const adminsMenus = baseMenus.sort((a, b) => a.position - b.position);
 
   useEffect(() => {
     if ( isMenuOpen ) {
@@ -37,11 +40,11 @@ const AdminLayout = () => {
 
 
   return (
-    <ProtectedRoute>
-      <div className="flex h-[calc(100dvh-60px)]">
+    <>
+      <div className="flex min-h-[calc(100dvh-60px)] md:h-[calc(100dvh-60px)]">
         <aside
           className={cn(
-            'fixed top-0 left-0 h-full w-60 bg-zinc-700 transition-transform transform md:translate-x-0 md:relative md:flex-shrink-0',
+            'fixed top-0 left-0 rounded-r-2xl h-full w-60 bg-zinc-700 transition-transform transform md:translate-x-0 md:relative md:flex-shrink-0',
             isMenuOpen ? "translate-x-0" : "-translate-x-60"
           )}
         >
@@ -78,7 +81,7 @@ const AdminLayout = () => {
           </div>
         </aside>
 
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col overflow-y-auto">
           <div className="flex items-center justify-between bg-zinc-700 py-4 px-6 md:hidden">
             <h1 className="font-paladinsgrad text-2xl">Admin</h1>
             <button
@@ -95,7 +98,7 @@ const AdminLayout = () => {
           </div>
         </div>
       </div>
-    </ProtectedRoute>
+    </>
   );
 };
 

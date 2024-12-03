@@ -11,32 +11,19 @@ import Players from "@pages/admin/Players.tsx";
 import Teams from "@pages/admin/Teams.tsx";
 import Matches from "@pages/admin/Matches.tsx";
 import ProtectedRoute from "@/utils/ProtectedRoute.tsx";
+import AddAdminForm from "@components/admin/admins/AddAdminForm.tsx";
+import EditAdminForm from "@components/admin/admins/EditAdminForm.tsx";
 
 export const routes: RouteObject[] = [
   {
     path: '/',
     element: <RootLayout/>,
     children: [
-      {
-        path: '/',
-        element: <Home/>
-      },
-      {
-        path: 'stream',
-        element: <Stream/>
-      },
-      {
-        path: 'contact',
-        element: <Contact/>
-      },
-      {
-        path: 'login',
-        element: <Login/>
-      },
-      {
-        path: '*',
-        element: <Home/>
-      },
+      { path: '/', element: <Home/> },
+      { path: '/stream', element: <Stream/> },
+      { path: '/contact', element: <Contact/> },
+      { path: '/login', element: <Login/> },
+      { path: '*', element: <Home/> },
       {
         path: '/admin',
         element: (
@@ -46,40 +33,49 @@ export const routes: RouteObject[] = [
         ),
         children: [
           {
-            path: 'dashboard',
-            element: (
+            path: 'dashboard', element: (
               <ProtectedRoute requiredPermission={1}>
                 <Dashboard/>
               </ProtectedRoute>
             )
           },
           {
-            path: 'admins',
-            element: (
+            path: 'admins', element: (
               <ProtectedRoute requiredPermission={2}>
                 <Admins/>
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: 'admins/add', element: (
+              <ProtectedRoute requiredPermission={2}>
+                <AddAdminForm/>
               </ProtectedRoute>
             )
           },
           {
-            path: 'players',
-            element: (
+            path: 'admins/edit/:id', element: (
+              <ProtectedRoute requiredPermission={2}>
+                <EditAdminForm/>
+              </ProtectedRoute>
+            )
+          },
+          {
+            path: 'players', element: (
               <ProtectedRoute requiredPermission={1}>
                 <Players/>
               </ProtectedRoute>
             )
           },
           {
-            path: 'teams',
-            element: (
+            path: 'teams', element: (
               <ProtectedRoute requiredPermission={1}>
                 <Teams/>
               </ProtectedRoute>
             )
           },
           {
-            path: 'matches',
-            element: (
+            path: 'matches', element: (
               <ProtectedRoute requiredPermission={1}>
                 <Matches/>
               </ProtectedRoute>

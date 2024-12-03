@@ -44,7 +44,7 @@ const AdminLayout = () => {
       <div className="flex min-h-[calc(100dvh-60px)] md:h-[calc(100dvh-60px)]">
         <aside
           className={cn(
-            'fixed top-0 left-0 rounded-r-2xl h-full w-60 bg-zinc-700 transition-transform transform md:translate-x-0 md:relative md:flex-shrink-0',
+            'fixed z-10 top-0 left-0 rounded-r-2xl h-full w-60 bg-zinc-700 transition-transform transform md:translate-x-0 md:relative md:flex-shrink-0',
             isMenuOpen ? "translate-x-0" : "-translate-x-60"
           )}
         >

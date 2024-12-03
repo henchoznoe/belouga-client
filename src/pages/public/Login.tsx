@@ -1,5 +1,5 @@
 import Heading from "@components/global/Heading.tsx";
-import LoginForm from "@components/login/LoginForm.tsx";
+import LoginForm from "@components/public/LoginForm.tsx";
 
 const Login = () => {
   return (

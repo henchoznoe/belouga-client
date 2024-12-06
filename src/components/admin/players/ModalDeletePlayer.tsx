@@ -1,27 +1,27 @@
-import { Alert, Button, Modal } from "flowbite-react";
-import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
-import { AdminsDataType } from "@/types/admins.ts";
+import { PlayersDataType } from "@/types/players.ts";
 import useAuth from "@/shared/hooks/useAuth.ts";
 import { useFetch } from "@/shared/hooks/useFetch.ts";
+import { Alert, Button, Modal } from "flowbite-react";
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
-type ModalDeleteAdminProps = {
+type ModalDeletePlayerProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
-  adminToDelete: AdminsDataType;
-  onAdminDeleted: (admin: AdminsDataType) => void;
+  playerToDelete: PlayersDataType;
+  onPlayerDeleted: (admin: PlayersDataType) => void;
 }
 
-const ModalDeleteAdmin = (props: ModalDeleteAdminProps) => {
+const ModalDeletePlayer = (props: ModalDeletePlayerProps) => {
 
   const authCtx = useAuth();
   const { send, isLoading, errors } = useFetch();
 
-  const deleteAdminHandler = async (admin: AdminsDataType) => {
-    const deleteAdminRes = await send(1, 'DELETE', `action=deleteAdmin&pk_admin=${props.adminToDelete.pk_admin}`, null, {
+  const deletePlayerHandler = async (player: PlayersDataType) => {
+    const deletePlayerRes = await send(1, 'DELETE', `action=deletePlayer&pk_player=${props.playerToDelete.pk_player}`, null, {
       Authorization: `Bearer ${authCtx.admin?.token}`
     });
-    if ( deleteAdminRes.success ) {
-      props.onAdminDeleted(admin);
+    if ( deletePlayerRes.success ) {
+      props.onPlayerDeleted(player);
       props.setOpen(false);
     }
   }
@@ -40,7 +40,7 @@ const ModalDeleteAdmin = (props: ModalDeleteAdminProps) => {
               <Button
                 color="failure"
                 disabled={isLoading[1]}
-                onClick={() => deleteAdminHandler(props.adminToDelete)}
+                onClick={() => deletePlayerHandler(props.playerToDelete)}
               >
                 Oui, je suis sûr
               </Button>
@@ -56,4 +56,4 @@ const ModalDeleteAdmin = (props: ModalDeleteAdminProps) => {
   );
 }
 
-export default ModalDeleteAdmin;
+export default ModalDeletePlayer;

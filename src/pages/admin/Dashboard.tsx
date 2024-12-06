@@ -25,14 +25,14 @@ const Dashboard = () => {
             <p className="font-semibold text-red-500">Problème ou bug ?</p>
             <p>
               Si tu rencontres des difficultés (impossible d'effectuer une action ou un bug bloquant),
-              contacte l'équipe technique le plus rapidement possible :
+              contacte l'équipe technique sur Discord le plus rapidement possible :
             </p>
             <ul className="list-disc list-inside mt-2">
               <li>
-                <span className="font-semibold">Quentin (Organisateur du tournoi) :</span> 076 650 97 41
+                <span className="font-semibold">Quentin (Organisateur du tournoi) :</span> quentadou.
               </li>
               <li>
-                <span className="font-semibold">Noé (Développeur du site web) :</span> 075 417 17 64
+                <span className="font-semibold">Noé (Développeur du site web) :</span> henchoznoe
               </li>
             </ul>
           </div>

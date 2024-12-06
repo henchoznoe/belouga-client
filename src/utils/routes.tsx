@@ -13,6 +13,7 @@ import Matches from "@pages/admin/Matches.tsx";
 import ProtectedRoute from "@/utils/ProtectedRoute.tsx";
 import AddAdminForm from "@components/admin/admins/AddAdminForm.tsx";
 import EditAdminForm from "@components/admin/admins/EditAdminForm.tsx";
+import AddPlayerForm from "@components/admin/players/AddPlayerForm.tsx";
 
 export const routes: RouteObject[] = [
   {
@@ -64,6 +65,13 @@ export const routes: RouteObject[] = [
             path: 'players', element: (
               <ProtectedRoute requiredPermission={1}>
                 <Players/>
+              </ProtectedRoute>
+            )
+          },
+          {
+            path: 'players/add', element: (
+              <ProtectedRoute requiredPermission={1}>
+                <AddPlayerForm/>
               </ProtectedRoute>
             )
           },

@@ -6,7 +6,7 @@ import { AdminsDataType, GetAdminsType } from "@/types/admins.ts";
 import { Alert, Spinner } from "flowbite-react";
 import AdminsTable from "@components/admin/admins/AdminsTable.tsx";
 import SearchAndAddAdmins from "@components/admin/admins/SearchAndAddAdmins.tsx";
-import ModalDeleteAdmin from "@components/admin/admins/ModalDeleteAdmin.tsx";
+import ModalDelete from "@components/admin/generics/ModalDelete.tsx";
 
 const Admins = () => {
 
@@ -62,11 +62,13 @@ const Admins = () => {
             setAdminToDelete={setAdminToDelete}
             setModalDeleteAdmin={setModalDeleteOpen}
           />
-          <ModalDeleteAdmin
+          <ModalDelete
             open={modalDeleteOpen}
             setOpen={setModalDeleteOpen}
-            adminToDelete={adminToDelete!}
-            onAdminDeleted={onAdminDeleted}
+            dataToDelete={adminToDelete!}
+            onDataDeleted={onAdminDeleted}
+            deleteAction={(admin) => `action=deleteAdmin&pk_admin=${admin.pk_admin}`}
+            confirmText="Es-tu sûr de vouloir supprimer cet administrateur ?"
           />
         </>
       )}

@@ -1,13 +1,11 @@
-import { AdminsDataType } from "@/types/admins.ts";
-import { TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { TextInput } from "flowbite-react";
 
-type SearchAndAddAdminsProps = {
-  admins: AdminsDataType[];
+type SearchAndAddProps = {
   onSearch: (search: string) => void;
 }
 
-const SearchAndAddAdmins = (props: SearchAndAddAdminsProps) => {
+const SearchAndAdd = (props: SearchAndAddProps) => {
 
   const navigate = useNavigate();
 
@@ -32,4 +30,4 @@ const SearchAndAddAdmins = (props: SearchAndAddAdminsProps) => {
   );
 }
 
-export default SearchAndAddAdmins;
+export default SearchAndAdd;

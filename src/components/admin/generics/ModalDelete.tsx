@@ -1,6 +1,5 @@
 import { Alert, Button, Modal } from "flowbite-react";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
-import useAuth from "@/shared/hooks/useAuth.ts";
 import { useFetch } from "@/shared/hooks/useFetch.ts";
 
 type ModalDeleteProps<T> = {
@@ -14,15 +13,14 @@ type ModalDeleteProps<T> = {
 
 const ModalDelete = <T, >(props: ModalDeleteProps<T>) => {
 
-  const authCtx = useAuth();
   const { send, isLoading, errors } = useFetch();
 
   const deleteHandler = async () => {
     const deleteUrl = props.deleteAction(props.dataToDelete);
-    const deleteRes = await send(1, "DELETE", deleteUrl, null, {
-      Authorization: `Bearer ${authCtx.admin?.token}`,
+    const deleteRes = await send(1, "DELETE", {
+      params: deleteUrl,
+      requireAuth: true
     });
-
     if ( deleteRes.success ) {
       props.onDataDeleted(props.dataToDelete);
       props.setOpen(false);

@@ -26,8 +26,9 @@ const EditAdminForm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const adminRes: GetAdminType = await send(1, 'GET', `action=getAdmin&pk_admin=${pk_admin}`, null, {
-        Authorization: `Bearer ${authCtx.admin?.token}`
+      const adminRes: GetAdminType = await send(1, 'GET', {
+        params: `action=getAdmin&pk_admin=${pk_admin}`,
+        requireAuth: true
       });
       if ( adminRes.success ) {
         setAdmin(adminRes.data);
@@ -35,8 +36,9 @@ const EditAdminForm = () => {
           username: adminRes.data.username,
           pk_admin_type: adminRes.data.pk_admin_type.toString()
         })
-        const adminTypesRes: GetAdminTypesType = await send(2, 'GET', 'action=getAdminTypes', null, {
-          Authorization: `Bearer ${authCtx.admin?.token}`
+        const adminTypesRes: GetAdminTypesType = await send(2, 'GET', {
+          params: 'action=getAdminTypes',
+          requireAuth: true
         });
         if ( adminTypesRes.success ) setAdminTypes(adminTypesRes.data);
       }
@@ -45,12 +47,9 @@ const EditAdminForm = () => {
   }, [authCtx.admin?.token, pk_admin, reset, send]);
 
   const editAdminHandler = async (data: EditAdminFormData) => {
-    const res: EditAdminsType = await send(3, 'PUT', null, JSON.stringify({
-      action: 'updateAdmin',
-      pk_admin,
-      ...data
-    }), {
-      Authorization: `Bearer ${authCtx.admin?.token}`
+    const res: EditAdminsType = await send(3, 'PUT', {
+      body: JSON.stringify({ action: 'updateAdmin', pk_admin, ...data }),
+      requireAuth: true
     });
     if ( res.success ) {
       toast.success(`L'utilisateur ${res.data.username} a été modifié`)

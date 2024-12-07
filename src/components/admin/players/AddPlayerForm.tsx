@@ -24,8 +24,9 @@ const AddPlayerForm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const teamsRes: GetTeamsType = await send(1, 'GET', 'action=getTeams', null, {
-        Authorization: `Bearer ${authCtx.admin?.token}`
+      const teamsRes: GetTeamsType = await send(1, 'GET', {
+        params: 'action=getTeams',
+        requireAuth: true
       });
       if ( teamsRes.success ) setTeams(teamsRes.data);
     }
@@ -37,13 +38,12 @@ const AddPlayerForm = () => {
       action: 'createPlayer',
       ...data
     };
-
     Object.keys(dataToSend).forEach(
       (key) => (dataToSend[key] === "null" || dataToSend[key] === '') && delete dataToSend[key]
     );
-
-    const res: AddPlayersType = await send(2, 'POST', null, JSON.stringify({ ...dataToSend }), {
-      Authorization: `Bearer ${authCtx.admin?.token}`
+    const res: AddPlayersType = await send(2, 'POST', {
+      body: JSON.stringify(dataToSend),
+      requireAuth: true
     });
     if ( res.success ) {
       toast.success(`Le joueur ${res.data.username} a été ajouté`)

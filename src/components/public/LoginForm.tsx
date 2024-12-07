@@ -12,12 +12,12 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const { send, isLoading, errors } = useFetch();
   const authCtx = useAuth();
-  const { register, handleSubmit, formState: { errors: formErrors } } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-  });
+  const form = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
 
   const loginHandler = async (data: LoginFormData) => {
-    const res = await send(1, 'POST', null, JSON.stringify({ action: 'login', ...data }));
+    const res = await send(1, 'POST', {
+      body: JSON.stringify({ action: 'login', ...data })
+    });
     if ( res.success ) {
       toast.success(`Bienvenue ${res.data.username}`)
       authCtx.login(res.data);
@@ -29,24 +29,28 @@ const LoginForm = () => {
     <>
       <div className="flex justify-center">
         <div className="w-80 bg-zinc-700 px-6 py-5 rounded-2xl">
-          <form className="flex flex-col gap-3" onSubmit={handleSubmit(loginHandler)}>
+          <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(loginHandler)}>
             <label>Nom d'utilisateur</label>
             <input
               type="text"
               className="px-2 py-1 text-black rounded-md"
               placeholder="Nom d'utilisateur"
-              {...register('username')}
+              {...form.register('username')}
             />
-            {formErrors.username && <span className="text-red-500">{formErrors.username?.message}</span>}
+            {form.formState.errors.username && (
+              <span className="text-red-500">{form.formState.errors.username?.message}</span>
+            )}
 
             <label>Mot de passe</label>
             <input
               type="password"
               className="px-2 py-1 text-black rounded-md"
               placeholder="Mot de passe"
-              {...register('password')}
+              {...form.register('password')}
             />
-            {formErrors.password && <span className="text-red-500">{formErrors.password?.message}</span>}
+            {form.formState.errors.password && (
+              <span className="text-red-500">{form.formState.errors.password?.message}</span>
+            )}
 
             <button
               className="py-2 bg-zinc-500 hover:bg-zinc-600 rounded-md"

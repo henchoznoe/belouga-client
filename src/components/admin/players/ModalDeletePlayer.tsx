@@ -1,5 +1,4 @@
 import { PlayersDataType } from "@/types/players.ts";
-import useAuth from "@/shared/hooks/useAuth.ts";
 import { useFetch } from "@/shared/hooks/useFetch.ts";
 import { Alert, Button, Modal } from "flowbite-react";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
@@ -13,12 +12,12 @@ type ModalDeletePlayerProps = {
 
 const ModalDeletePlayer = (props: ModalDeletePlayerProps) => {
 
-  const authCtx = useAuth();
   const { send, isLoading, errors } = useFetch();
 
   const deletePlayerHandler = async (player: PlayersDataType) => {
-    const deletePlayerRes = await send(1, 'DELETE', `action=deletePlayer&pk_player=${props.playerToDelete.pk_player}`, null, {
-      Authorization: `Bearer ${authCtx.admin?.token}`
+    const deletePlayerRes = await send(1, 'DELETE', {
+      params: `action=deletePlayer&pk_player=${player.pk_player}`,
+      requireAuth: true
     });
     if ( deletePlayerRes.success ) {
       props.onPlayerDeleted(player);

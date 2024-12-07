@@ -1,17 +1,17 @@
 import AdminContainer from "@components/global/AdminContainer.tsx";
-import useAuth from "@/shared/hooks/useAuth.ts";
 import { useFetch } from "@/shared/hooks/useFetch.ts";
 import { useEffect, useState } from "react";
 import { AdminsDataType, GetAdminsType } from "@/types/admins.ts";
 import { Alert, Spinner } from "flowbite-react";
-import AdminsTable from "@components/admin/admins/AdminsTable.tsx";
-import SearchAndAddAdmins from "@components/admin/admins/SearchAndAddAdmins.tsx";
 import ModalDelete from "@components/admin/generics/ModalDelete.tsx";
+import DataTable from "@components/admin/generics/DataTable.tsx";
+import { useNavigate } from "react-router-dom";
+import SearchAndAdd from "@components/admin/generics/SearchAndAdd.tsx";
 
 const Admins = () => {
 
-  const authCtx = useAuth();
   const { send, isLoading, errors } = useFetch();
+  const navigate = useNavigate();
 
   const [admins, setAdmins] = useState<AdminsDataType[]>([]);
   const [filter, setFilter] = useState<string>("");
@@ -21,13 +21,11 @@ const Admins = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const adminRes: GetAdminsType = await send(1, 'GET', 'action=getAdmins', null, {
-        Authorization: `Bearer ${authCtx.admin?.token}`
-      });
+      const adminRes: GetAdminsType = await send(1, 'GET', { params: 'action=getAdmins', requireAuth: true });
       if ( adminRes.success ) setAdmins(adminRes.data);
     }
     fetchData();
-  }, [authCtx.admin?.token, send]);
+  }, [send]);
 
   const onAdminDeleted = (deletedAdmin: AdminsDataType) => {
     setAdmins((prev) => prev.filter((admin) => admin.pk_admin !== deletedAdmin.pk_admin));
@@ -43,8 +41,7 @@ const Admins = () => {
         Voici la liste des administrateurs du site web. En tant que SuperAdmin, tu peux ajouter, modifier ou supprimer
         des administrateurs.
       </p>
-      <SearchAndAddAdmins
-        admins={filteredAdmins}
+      <SearchAndAdd
         onSearch={setFilter}
       />
       {isLoading[1] ? (
@@ -57,10 +54,33 @@ const Admins = () => {
         <Alert color="yellow">Aucun administrateur trouvé.</Alert>
       ) : (
         <>
-          <AdminsTable
-            admins={filteredAdmins}
-            setAdminToDelete={setAdminToDelete}
-            setModalDeleteAdmin={setModalDeleteOpen}
+          <DataTable
+            data={filteredAdmins}
+            columns={[
+              {
+                key: "username",
+                label: "Nom d'utilisateur",
+                render: (admin) => (
+                  <>
+                    {admin.username}
+                  </>
+                ),
+              },
+              {
+                key: "label",
+                label: "Rôle",
+                render: (admin) => (
+                  <>
+                    {admin.label}
+                  </>
+                )
+              },
+            ]}
+            onEdit={(admin) => navigate(`edit/${admin.pk_admin}`)}
+            onDelete={(admin) => {
+              setAdminToDelete(admin);
+              setModalDeleteOpen(true);
+            }}
           />
           <ModalDelete
             open={modalDeleteOpen}

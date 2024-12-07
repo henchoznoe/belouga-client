@@ -1,7 +1,6 @@
 import { Alert, Spinner } from "flowbite-react";
 import { AddAdminsType } from "@/types/admins.ts";
 import { useFetch } from "@/shared/hooks/useFetch.ts";
-import useAuth from "@/shared/hooks/useAuth.ts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -15,7 +14,6 @@ import BtnReturnTo from "@components/buttons/BtnReturnTo.tsx";
 const AddAdminForm = () => {
 
   const { send, isLoading, errors } = useFetch();
-  const authCtx = useAuth();
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors: formErrors } } = useForm<AddAdminFormData>({
     resolver: zodResolver(addAdminSchema),
@@ -24,20 +22,29 @@ const AddAdminForm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const adminTypesRes: GetAdminTypesType = await send(1, 'GET', 'action=getAdminTypes', null, {
-        Authorization: `Bearer ${authCtx.admin?.token}`
+      const adminTypesRes: GetAdminTypesType = await send(1, 'GET', {
+        params: 'action=getAdminTypes',
+        requireAuth: true
       });
       if ( adminTypesRes.success ) setAdminTypes(adminTypesRes.data);
     }
     fetchData()
-  }, [authCtx.admin?.token, send]);
+  }, [send]);
 
   const addAdminHandler = async (data: AddAdminFormData) => {
-    const res: AddAdminsType = await send(2, 'POST', null, JSON.stringify({ action: 'createAdmin', ...data }), {
-      Authorization: `Bearer ${authCtx.admin?.token}`
+    const dataToSend: any = {
+      action: 'createAdmin',
+      ...data
+    }
+    Object.keys(dataToSend).forEach(
+      (key) => (dataToSend[key] === "null" || dataToSend[key] === '') && delete dataToSend[key]
+    );
+    const adminsRes: AddAdminsType = await send(2, 'POST', {
+      body: JSON.stringify(dataToSend),
+      requireAuth: true
     });
-    if ( res.success ) {
-      toast.success(`L'utilisateur ${res.data.username} a été ajouté`)
+    if ( adminsRes.success ) {
+      toast.success(`L'utilisateur ${adminsRes.data.username} a été ajouté`)
       navigate('/admin/admins');
     }
   };

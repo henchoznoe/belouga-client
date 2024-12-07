@@ -1,17 +1,17 @@
 import AdminContainer from "@components/global/AdminContainer.tsx";
-import useAuth from "@/shared/hooks/useAuth.ts";
 import { useFetch } from "@/shared/hooks/useFetch.ts";
 import { useEffect, useState } from "react";
 import { Alert, Spinner } from "flowbite-react";
 import { GetPlayersType, PlayersDataType } from "@/types/players.ts";
-import PlayersTable from "@components/admin/players/PlayersTable.tsx";
-import SearchAndAddPlayers from "@components/admin/players/SearchAndAddPlayers.tsx";
 import ModalDelete from "@components/admin/generics/ModalDelete.tsx";
+import DataTable from "@components/admin/generics/DataTable.tsx";
+import { useNavigate } from "react-router-dom";
+import SearchAndAdd from "@components/admin/generics/SearchAndAdd.tsx";
 
 const Players = () => {
 
-  const authCtx = useAuth();
   const { send, isLoading, errors } = useFetch();
+  const navigate = useNavigate();
 
   const [players, setPlayers] = useState<PlayersDataType[]>([]);
   const [filter, setFilter] = useState<string>("");
@@ -21,13 +21,11 @@ const Players = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const playersRes: GetPlayersType = await send(1, 'GET', 'action=getPlayers', null, {
-        Authorization: `Bearer ${authCtx.admin?.token}`
-      });
+      const playersRes: GetPlayersType = await send(1, 'GET', { params: 'action=getPlayers', requireAuth: true });
       if ( playersRes.success ) setPlayers(playersRes.data);
     }
     fetchData();
-  }, [authCtx.admin?.token, send]);
+  }, [send]);
 
   const onPlayerDeleted = (deletedPlayer: PlayersDataType) => {
     setPlayers((prev) => prev.filter((player) => player.pk_player !== deletedPlayer.pk_player));
@@ -48,8 +46,7 @@ const Players = () => {
           Voici la liste des joueurs du tournoi. En tant qu'Admin, tu peux ajouter, modifier ou supprimer
           des joueurs.
         </p>
-        <SearchAndAddPlayers
-          players={filteredPlayers}
+        <SearchAndAdd
           onSearch={setFilter}
         />
         {isLoading[1] ? (
@@ -62,10 +59,37 @@ const Players = () => {
           <Alert color="yellow">Aucun joueur trouvé.</Alert>
         ) : (
           <>
-            <PlayersTable
-              players={filteredPlayers}
-              setPlayerToDelete={setPlayerToDelete}
-              setModalDeletePlayer={setModalDeleteOpen}
+            <DataTable
+              data={filteredPlayers}
+              columns={[
+                {
+                  key: "username",
+                  label: "Utilisateur",
+                  render: (player) => (
+                    <>
+                      {player.username}
+                      <br/>
+                      {player.discord}
+                      <br/>
+                      {player.twitch}
+                    </>
+                  ),
+                },
+                {
+                  key: "team_name",
+                  label: "Équipe",
+                  render: (player) => (
+                    <>
+                      {player.team_name || "-"}
+                    </>
+                  )
+                },
+              ]}
+              onEdit={(player) => navigate(`edit/${player.pk_player}`)}
+              onDelete={(player) => {
+                setPlayerToDelete(player);
+                setModalDeleteOpen(true);
+              }}
             />
             <ModalDelete
               open={modalDeleteOpen}

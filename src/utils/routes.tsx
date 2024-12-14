@@ -12,8 +12,10 @@ import Teams from "@pages/admin/Teams.tsx";
 import Matches from "@pages/admin/Matches.tsx";
 import ProtectedRoute from "@/utils/ProtectedRoute.tsx";
 import AddAdminForm from "@components/admin/admins/AddAdminForm.tsx";
-import EditAdminForm from "@components/admin/admins/EditAdminForm.tsx";
 import AddPlayerForm from "@components/admin/players/AddPlayerForm.tsx";
+import AddTeamForm from "@components/admin/teams/AddTeamForm.tsx";
+import SignUp from "@pages/public/SignUp.tsx";
+import AddMatchForm from "@components/admin/matches/AddMatchForm.tsx";
 
 export const routes: RouteObject[] = [
   {
@@ -24,6 +26,7 @@ export const routes: RouteObject[] = [
       { path: '/stream', element: <Stream/> },
       { path: '/contact', element: <Contact/> },
       { path: '/login', element: <Login/> },
+      { path: '/signup', element: <SignUp/> },
       { path: '*', element: <Home/> },
       {
         path: '/admin',
@@ -54,13 +57,13 @@ export const routes: RouteObject[] = [
               </ProtectedRoute>
             )
           },
-          {
+          /*{
             path: 'admins/edit/:id', element: (
               <ProtectedRoute requiredPermission={2}>
                 <EditAdminForm/>
               </ProtectedRoute>
             )
-          },
+          },*/
           {
             path: 'players', element: (
               <ProtectedRoute requiredPermission={1}>
@@ -75,6 +78,13 @@ export const routes: RouteObject[] = [
               </ProtectedRoute>
             )
           },
+          /*{
+            path: 'players/edit/:id', element: (
+              <ProtectedRoute requiredPermission={1}>
+                <EditPlayerForm/>
+              </ProtectedRoute>
+            )
+          },*/
           {
             path: 'teams', element: (
               <ProtectedRoute requiredPermission={1}>
@@ -83,12 +93,40 @@ export const routes: RouteObject[] = [
             )
           },
           {
+            path: 'teams/add', element: (
+              <ProtectedRoute requiredPermission={1}>
+                <AddTeamForm/>
+              </ProtectedRoute>
+            )
+          },
+          /*{
+            path: 'teams/edit/:id', element: (
+              <ProtectedRoute requiredPermission={1}>
+                <EditTeamForm/>
+              </ProtectedRoute>
+            )
+          },*/
+          {
             path: 'matches', element: (
               <ProtectedRoute requiredPermission={1}>
                 <Matches/>
               </ProtectedRoute>
             )
-          }
+          },
+          {
+            path: 'matches/add', element: (
+              <ProtectedRoute requiredPermission={1}>
+                <AddMatchForm/>
+              </ProtectedRoute>
+            )
+          },
+          /*{
+            path: 'matches/edit/:id', element: (
+              <ProtectedRoute requiredPermission={1}>
+                <EditMatchForm/>
+              </ProtectedRoute>
+            )
+          }*/
         ]
       }
     ]

@@ -15,9 +15,8 @@ const AddAdminForm = () => {
 
   const { send, isLoading, errors } = useFetch();
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors: formErrors } } = useForm<AddAdminFormData>({
-    resolver: zodResolver(addAdminSchema),
-  });
+  const form = useForm<AddAdminFormData>({ resolver: zodResolver(addAdminSchema) });
+
   const [adminTypes, setAdminTypes] = useState<AdminTypesDataType[]>([]);
 
   useEffect(() => {
@@ -32,19 +31,19 @@ const AddAdminForm = () => {
   }, [send]);
 
   const addAdminHandler = async (data: AddAdminFormData) => {
-    const dataToSend: any = {
-      action: 'createAdmin',
-      ...data
-    }
-    Object.keys(dataToSend).forEach(
-      (key) => (dataToSend[key] === "null" || dataToSend[key] === '') && delete dataToSend[key]
+    const dataToSend = Object.fromEntries(
+      Object.entries({
+        action: 'createAdmin',
+        ...data,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      }).filter(([_, value]) => value !== '')
     );
     const adminsRes: AddAdminsType = await send(2, 'POST', {
       body: JSON.stringify(dataToSend),
       requireAuth: true
     });
     if ( adminsRes.success ) {
-      toast.success(`L'utilisateur ${adminsRes.data.username} a été ajouté`)
+      toast.success(`L'administrateur ${adminsRes.data.username} a été ajouté`)
       navigate('/admin/admins');
     }
   };
@@ -64,29 +63,32 @@ const AddAdminForm = () => {
         ) : (
           <div className="flex justify-center">
             <div className="w-80 px-6 py-5 rounded-2xl">
-              <form className="flex flex-col gap-3" onSubmit={handleSubmit(addAdminHandler)}>
+              <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(addAdminHandler)}>
                 <label>Nom d'utilisateur</label>
                 <input
                   type="text"
                   className="px-2 py-1 text-black rounded-md"
                   placeholder="Nom d'utilisateur"
-                  {...register('username')}
+                  {...form.register('username')}
                 />
-                {formErrors.username && <span className="text-red-500">{formErrors.username?.message}</span>}
+                {form.formState.errors.username &&
+                  <span className="text-red-500">{form.formState.errors.username?.message}</span>}
 
                 <label>Mot de passe</label>
                 <input
                   type="password"
                   className="px-2 py-1 text-black rounded-md"
                   placeholder="Mot de passe"
-                  {...register('password')}
+                  {...form.register('password')}
                 />
-                {formErrors.password && <span className="text-red-500">{formErrors.password?.message}</span>}
+                {form.formState.errors.password &&
+                  <span className="text-red-500">{form.formState.errors.password?.message}</span>}
 
                 <label>Rôle</label>
                 <select
                   className="px-2 py-1 text-black rounded-md"
-                  {...register('pk_admin_type')}
+                  {...form.register('fk_admin_type')}
+                  defaultValue={adminTypes[0].pk_admin_type}
                 >
                   {adminTypes.map((adminType) => (
                     <option key={adminType.pk_admin_type} value={adminType.pk_admin_type}>{adminType.label}</option>

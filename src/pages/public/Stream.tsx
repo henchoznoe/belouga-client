@@ -5,7 +5,10 @@ const Stream = () => {
   return (
     <>
       <Heading title="Stream"/>
-      <TwitchEmbed channel="quentadoulive"/>
+      <div className="flex flex-col gap-3 items-center">
+        <p>Texte ici, description, images, etc.</p>
+        <TwitchEmbed channel="quentadoulive"/>
+      </div>
     </>
   );
 };

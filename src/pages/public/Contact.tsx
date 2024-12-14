@@ -4,6 +4,9 @@ const Contact = () => {
   return (
     <>
       <Heading title="Contact"/>
+      <div className="flex flex-col gap-3 items-center">
+        <p>Texte ici, formulaire de contact etc.</p>
+      </div>
     </>
   );
 }

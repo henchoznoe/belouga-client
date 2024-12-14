@@ -28,11 +28,7 @@ const AdminLayout = () => {
   const adminsMenus = baseMenus.sort((a, b) => a.position - b.position);
 
   useEffect(() => {
-    if ( isMenuOpen ) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };

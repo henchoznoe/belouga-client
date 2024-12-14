@@ -1,6 +1,5 @@
 import { Alert, Spinner } from "flowbite-react";
 import { useFetch } from "@/shared/hooks/useFetch.ts";
-import useAuth from "@/shared/hooks/useAuth.ts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -15,11 +14,9 @@ import { AddPlayersType } from "@/types/players.ts";
 const AddPlayerForm = () => {
 
   const { send, isLoading, errors } = useFetch();
-  const authCtx = useAuth();
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors: formErrors } } = useForm<AddPlayerFormData>({
-    resolver: zodResolver(addPlayerSchema),
-  });
+  const form = useForm<AddPlayerFormData>({ resolver: zodResolver(addPlayerSchema) });
+
   const [teams, setTeams] = useState<TeamsDataType[]>([]);
 
   useEffect(() => {
@@ -31,22 +28,23 @@ const AddPlayerForm = () => {
       if ( teamsRes.success ) setTeams(teamsRes.data);
     }
     fetchData()
-  }, [authCtx.admin?.token, send]);
+  }, [send]);
 
   const addPlayerHandler = async (data: AddPlayerFormData) => {
-    const dataToSend: any = {
-      action: 'createPlayer',
-      ...data
-    };
-    Object.keys(dataToSend).forEach(
-      (key) => (dataToSend[key] === "null" || dataToSend[key] === '') && delete dataToSend[key]
+    const dataToSend = Object.fromEntries(
+      Object.entries({
+        action: 'createPlayer',
+        ...data,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      }).filter(([_, value]) => value !== '')
     );
     const res: AddPlayersType = await send(2, 'POST', {
       body: JSON.stringify(dataToSend),
-      requireAuth: true
+      requireAuth: true,
     });
+
     if ( res.success ) {
-      toast.success(`Le joueur ${res.data.username} a été ajouté`)
+      toast.success(`Le joueur ${res.data.username} a été ajouté`);
       navigate('/admin/players');
     }
   };
@@ -66,40 +64,63 @@ const AddPlayerForm = () => {
         ) : (
           <div className="flex justify-center">
             <div className="w-80 px-6 py-5 rounded-2xl">
-              <form className="flex flex-col gap-3" onSubmit={handleSubmit(addPlayerHandler)}>
-                <label>Nom d'utilisateur</label>
+              <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(addPlayerHandler)}>
+                <label>Nom d'utilisateur*</label>
                 <input
                   type="text"
                   className="px-2 py-1 text-black rounded-md"
                   placeholder="Nom d'utilisateur"
-                  {...register('username')}
+                  {...form.register('username')}
                 />
-                {formErrors.username && <span className="text-red-500">{formErrors.username?.message}</span>}
+                {form.formState.errors.username &&
+                  <span className="text-red-500">{form.formState.errors.username?.message}</span>}
 
-                <label>Discord</label>
+                <label>Discord*</label>
                 <input
                   type="text"
                   className="px-2 py-1 text-black rounded-md"
                   placeholder="Discord"
-                  {...register('discord')}
+                  {...form.register('discord')}
                 />
-                {formErrors.discord && <span className="text-red-500">{formErrors.discord?.message}</span>}
+                {form.formState.errors.discord &&
+                  <span className="text-red-500">{form.formState.errors.discord?.message}</span>}
+
+                <label>Riot ID*</label>
+                <input
+                  type="text"
+                  className="px-2 py-1 text-black rounded-md"
+                  placeholder="Riot ID"
+                  {...form.register('riot_username')}
+                />
+                {form.formState.errors.riot_username &&
+                  <span className="text-red-500">{form.formState.errors.riot_username?.message}</span>}
 
                 <label>Twitch</label>
                 <input
                   type="text"
                   className="px-2 py-1 text-black rounded-md"
                   placeholder="Twitch"
-                  {...register('twitch')}
+                  {...form.register('twitch')}
                 />
-                {formErrors.twitch && <span className="text-red-500">{formErrors.twitch?.message}</span>}
+                {form.formState.errors.twitch &&
+                  <span className="text-red-500">{form.formState.errors.twitch?.message}</span>}
+
+                <label>Rang Valo*</label>
+                <input
+                  type="text"
+                  className="px-2 py-1 text-black rounded-md"
+                  placeholder="Rang Valorant"
+                  {...form.register('rank')}
+                />
+                {form.formState.errors.rank &&
+                  <span className="text-red-500">{form.formState.errors.rank?.message}</span>}
 
                 <label>Equipe</label>
                 <select
                   className="px-2 py-1 text-black rounded-md"
-                  {...register('pk_team')}
+                  {...form.register('fk_team')}
                 >
-                  <option value="null">Facultatif</option>
+                  <option value="">Aucune</option>
                   {teams.map((team) => (
                     <option key={team.pk_team} value={team.pk_team}>{team.name}</option>
                   ))}

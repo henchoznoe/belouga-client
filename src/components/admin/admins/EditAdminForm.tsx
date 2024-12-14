@@ -34,7 +34,7 @@ const EditAdminForm = () => {
         setAdmin(adminRes.data);
         reset({
           username: adminRes.data.username,
-          pk_admin_type: adminRes.data.pk_admin_type.toString()
+          pk_admin_type: adminRes.data.fk_admin_type.toString()
         })
         const adminTypesRes: GetAdminTypesType = await send(2, 'GET', {
           params: 'action=getAdminTypes',
@@ -47,7 +47,7 @@ const EditAdminForm = () => {
   }, [authCtx.admin?.token, pk_admin, reset, send]);
 
   const editAdminHandler = async (data: EditAdminFormData) => {
-    const res: EditAdminsType = await send(3, 'PUT', {
+    const res: EditAdminsType = await send(3, 'PATCH', {
       body: JSON.stringify({ action: 'updateAdmin', pk_admin, ...data }),
       requireAuth: true
     });

@@ -28,7 +28,7 @@ const ModalDelete = <T, >(props: ModalDeleteProps<T>) => {
   };
 
   return (
-    <Modal show={props.open} size="md" onClose={() => props.setOpen(false)} popup>
+    <Modal show={props.open} size="md" onClose={() => props.setOpen(false)} popup dismissible position="center">
       <Modal.Header/>
       <Modal.Body>
         <div className="text-center">

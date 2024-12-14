@@ -21,7 +21,10 @@ const Admins = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const adminRes: GetAdminsType = await send(1, 'GET', { params: 'action=getAdmins', requireAuth: true });
+      const adminRes: GetAdminsType = await send(1, 'GET', {
+        params: 'action=getAdmins',
+        requireAuth: true
+      });
       if ( adminRes.success ) setAdmins(adminRes.data);
     }
     fetchData();
@@ -41,9 +44,7 @@ const Admins = () => {
         Voici la liste des administrateurs du site web. En tant que SuperAdmin, tu peux ajouter, modifier ou supprimer
         des administrateurs.
       </p>
-      <SearchAndAdd
-        onSearch={setFilter}
-      />
+      <SearchAndAdd onSearch={setFilter}/>
       {isLoading[1] ? (
         <Alert color="gray">
           <Spinner color="gray"/> Données en cours de chargement...
@@ -60,20 +61,12 @@ const Admins = () => {
               {
                 key: "username",
                 label: "Nom d'utilisateur",
-                render: (admin) => (
-                  <>
-                    {admin.username}
-                  </>
-                ),
+                render: (admin) => <>{admin.username}</>
               },
               {
                 key: "label",
                 label: "Rôle",
-                render: (admin) => (
-                  <>
-                    {admin.label}
-                  </>
-                )
+                render: (admin) => <>{admin.label}</>
               },
             ]}
             onEdit={(admin) => navigate(`edit/${admin.pk_admin}`)}
@@ -88,7 +81,7 @@ const Admins = () => {
             dataToDelete={adminToDelete!}
             onDataDeleted={onAdminDeleted}
             deleteAction={(admin) => `action=deleteAdmin&pk_admin=${admin.pk_admin}`}
-            confirmText="Es-tu sûr de vouloir supprimer cet administrateur ?"
+            confirmText={`Êtes-vous sûr de vouloir supprimer l'administrateur [${adminToDelete?.username}] ?`}
           />
         </>
       )}

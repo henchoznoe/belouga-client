@@ -19,7 +19,7 @@ const SearchAndAdd = (props: SearchAndAddProps) => {
             onChange={(e) => props.onSearch(e.target.value)}
           />
           <button
-            className="px-4 py-2 bg-zinc-800 rounded-lg hover:bg-zinc-600"
+            className="px-4 py-2 bg-white text-black rounded-lg hover:bg-white/80"
             onClick={() => navigate('add')}
           >
             Ajouter

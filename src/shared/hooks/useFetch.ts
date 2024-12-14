@@ -43,10 +43,18 @@ export const useFetch = () => {
     setIsLoading((prevIsLoading) => ({ ...prevIsLoading, [key]: false }));
   };
 
+  const clearErrors = (key: number) => {
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      delete updatedErrors[key];
+      return updatedErrors;
+    });
+  };
+
   const send = useCallback(
     async (
       key: number,
-      method: "GET" | "POST" | "PUT" | "DELETE",
+      method: "GET" | "POST" | "PATCH" | "DELETE",
       { params, body, requireAuth }: { params?: string; body?: string; requireAuth?: boolean }
     ) => {
       const { signal } = prepareRequest(key);
@@ -82,5 +90,5 @@ export const useFetch = () => {
     };
   }, []);
 
-  return { send, isLoading, errors };
+  return { send, isLoading, errors, clearErrors };
 };

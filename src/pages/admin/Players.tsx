@@ -21,7 +21,10 @@ const Players = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const playersRes: GetPlayersType = await send(1, 'GET', { params: 'action=getPlayers', requireAuth: true });
+      const playersRes: GetPlayersType = await send(1, 'GET', {
+        params: 'action=getPlayers',
+        requireAuth: true
+      });
       if ( playersRes.success ) setPlayers(playersRes.data);
     }
     fetchData();
@@ -46,9 +49,7 @@ const Players = () => {
           Voici la liste des joueurs du tournoi. En tant qu'Admin, tu peux ajouter, modifier ou supprimer
           des joueurs.
         </p>
-        <SearchAndAdd
-          onSearch={setFilter}
-        />
+        <SearchAndAdd onSearch={setFilter}/>
         {isLoading[1] ? (
           <Alert color="gray">
             <Spinner color="gray"/> Données en cours de chargement...
@@ -64,25 +65,37 @@ const Players = () => {
               columns={[
                 {
                   key: "username",
-                  label: "Utilisateur",
+                  label: "Joueur",
                   render: (player) => (
                     <>
                       {player.username}
                       <br/>
                       {player.discord}
                       <br/>
-                      {player.twitch}
+                      {player.riot_username}
                     </>
                   ),
                 },
                 {
-                  key: "team_name",
-                  label: "Équipe",
+                  key: "twitch",
+                  label: "Twitch",
                   render: (player) => (
                     <>
-                      {player.team_name || "-"}
+                      {player.twitch
+                        ? <a href={player.twitch} target="_blank" className="text-blue-500">Lien</a>
+                        : '---'}
                     </>
                   )
+                },
+                {
+                  key: "rank",
+                  label: "Rang",
+                  render: (player) => <>{player.rank}</>
+                },
+                {
+                  key: "team_name",
+                  label: "Équipe",
+                  render: (player) => <>{player.team_name || "---"}</>
                 },
               ]}
               onEdit={(player) => navigate(`edit/${player.pk_player}`)}
@@ -97,7 +110,7 @@ const Players = () => {
               dataToDelete={playerToDelete!}
               onDataDeleted={onPlayerDeleted}
               deleteAction={(player) => `action=deletePlayer&pk_player=${player.pk_player}`}
-              confirmText="Es-tu sûr de vouloir supprimer ce joueur ?"
+              confirmText={`Êtes-vous sûr de vouloir supprimer le joueur [${playerToDelete?.username}] ?`}
             />
           </>
         )}

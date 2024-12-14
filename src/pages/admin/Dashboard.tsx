@@ -2,6 +2,7 @@ import useAuth from "@/shared/hooks/useAuth.ts";
 import AdminContainer from "@components/global/AdminContainer.tsx";
 
 const Dashboard = () => {
+
   const authCtx = useAuth();
 
   return (

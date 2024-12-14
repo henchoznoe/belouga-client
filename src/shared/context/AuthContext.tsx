@@ -1,18 +1,5 @@
 import { createContext, useState, useEffect, PropsWithChildren } from 'react';
-
-interface Admin {
-  token: string;
-  expiresAt: number;
-  username: string;
-  permission: number;
-}
-
-interface AuthContextType {
-  isAuthenticated: boolean;
-  admin: Admin | null;
-  login: (admin: Admin) => void;
-  logout: () => void;
-}
+import { Admin, AuthContextType } from "@/types/auth.ts";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

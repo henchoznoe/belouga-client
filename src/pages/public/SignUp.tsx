@@ -5,7 +5,7 @@ const SignUp = () => {
   return (
     <>
       <Heading title="Inscriptions"/>
-      <p>Le tournoi se déroule, comme mentionné, par équipe de 5 personnes. Suite du texte ici</p>
+      <p className="italic">Formulaire d'inscriptions ici, affichages des équipes inscrites</p>
       <SignUpForm/>
     </>
   );

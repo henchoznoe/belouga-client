@@ -22,6 +22,11 @@ const Dashboard = () => {
             Cette page est dédiée aux administrateurs du <span className="font-semibold">BelougaTournament</span>.
             Tu peux y gérer le tournoi et accéder aux fonctionnalités réservées aux administrateurs.
           </p>
+          <p>
+            Tu peux gérer les joueurs, les équipes, les matches et les autres administrateurs
+            (si tu as le rôle de SuperAdmin). Utilise les sections correspondantes du menu pour naviguer.
+          </p>
+
           <div className="bg-zinc-500 p-4 rounded-md">
             <p className="font-semibold text-red-500">Problème ou bug ?</p>
             <p>
@@ -38,13 +43,6 @@ const Dashboard = () => {
             </ul>
           </div>
 
-          <div>
-            <p>
-              Tu peux gérer les joueurs, les équipes, les matches et les autres administrateurs
-              (si tu as le rôle de SuperAdmin). Utilise les sections correspondantes du menu pour naviguer.
-            </p>
-          </div>
-
           <div className="bg-zinc-500 p-4 rounded-md">
             <p className="font-semibold text-green-500">Suggestions :</p>
             <p>
@@ -54,8 +52,16 @@ const Dashboard = () => {
             </p>
           </div>
 
+          <div className="bg-zinc-500 p-4 rounded-md">
+            <p className="font-semibold text-blue-500">Autres questions :</p>
+            <p className="text-justify">
+              Pour toute autre question, tu peux contacter l'équipe technique sur Discord. Nous sommes là pour
+              t'aider et répondre à tes interrogations.
+            </p>
+          </div>
+
           <div className="flex justify-center">
-            <img className="w-60" src="/img/red-logo.png" alt="Logo Belouga Tournament"/>
+            <img className="w-32 md:w-48" src="/img/red-logo.png" alt="Logo Belouga Tournament"/>
           </div>
         </div>
       </div>

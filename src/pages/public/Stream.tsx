@@ -6,7 +6,6 @@ const Stream = () => {
     <>
       <Heading title="Stream"/>
       <div className="flex flex-col gap-3 items-center">
-        <p>Texte ici, description, images, etc.</p>
         <TwitchEmbed channel="quentadoulive"/>
       </div>
     </>

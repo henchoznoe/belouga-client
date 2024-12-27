@@ -1,7 +1,7 @@
 const SignUpForm = () => {
   return (
     <>
-      Formulaire ici
+      <p className="italic">Ceci est le formulaire d'inscription</p>
     </>
   );
 }

@@ -30,6 +30,7 @@ const Footer = () => {
             <SocialIcon url="https://www.twitch.tv/quentadoulive" target="_blank"/>
             <SocialIcon url="https://www.youtube.com/@quentadou9064" target="_blank"/>
             <SocialIcon url="https://www.tiktok.com/@quentadou" target="_blank"/>
+            <SocialIcon url="https://www.instagram.com/quentadou._" target="_blank"/>
           </div>
           <hr className="my-4 border-white sm:mx-auto"/>
           <span className="block text-sm sm:text-center">

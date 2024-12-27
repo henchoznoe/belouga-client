@@ -34,7 +34,7 @@ const EditAdminForm = () => {
         setAdmin(adminRes.data);
         reset({
           username: adminRes.data.username,
-          pk_admin_type: adminRes.data.fk_admin_type.toString()
+          fk_admin_type: adminRes.data.fk_admin_type.toString()
         })
         const adminTypesRes: GetAdminTypesType = await send(2, 'GET', {
           params: 'action=getAdminTypes',
@@ -89,13 +89,13 @@ const EditAdminForm = () => {
                 <label>Rôle</label>
                 <select
                   className="px-2 py-1 text-black rounded-md"
-                  {...register('pk_admin_type')}
+                  {...register('fk_admin_type')}
                 >
                   {adminTypes.map((adminType) => (
                     <option key={adminType.pk_admin_type} value={adminType.pk_admin_type}>{adminType.label}</option>
                   ))}
                 </select>
-                {formErrors.pk_admin_type && <span className="text-red-500">{formErrors.pk_admin_type?.message}</span>}
+                {formErrors.fk_admin_type && <span className="text-red-500">{formErrors.fk_admin_type?.message}</span>}
 
                 <button
                   className="py-2 bg-zinc-500 hover:bg-zinc-600 rounded-md"

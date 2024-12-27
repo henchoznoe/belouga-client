@@ -32,9 +32,11 @@ const EditPlayerForm = () => {
         setPlayer(playerRes.data);
         reset({
           username: playerRes.data.username,
+          riot_username: playerRes.data.riot_username,
           discord: playerRes.data.discord,
           twitch: playerRes.data.twitch?.toString(),
-          pk_team: playerRes.data.fk_team?.toString()
+          rank: playerRes.data.rank,
+          fk_team: playerRes.data.fk_team?.toString()
         })
         const teamsRes: GetTeamsType = await send(2, 'GET', {
           params: 'action=getTeams',
@@ -50,11 +52,11 @@ const EditPlayerForm = () => {
     const dataToSend: any = {
       action: 'updatePlayer',
       pk_player,
-      ...data
+      ...data,
     };
-    Object.keys(dataToSend).forEach(
-      (key) => (dataToSend[key] === "null" || dataToSend[key] === '') && delete dataToSend[key]
-    );
+    Object.keys(dataToSend).forEach((key) => {
+      if ( dataToSend[key] === "null" || dataToSend[key] === "" ) dataToSend[key] = null;
+    });
     const res: EditPlayersType = await send(3, 'PATCH', {
       body: JSON.stringify(dataToSend),
       requireAuth: true
@@ -94,6 +96,15 @@ const EditPlayerForm = () => {
                 />
                 {formErrors.username && <span className="text-red-500">{formErrors.username?.message}</span>}
 
+                <label>Riot ID</label>
+                <input
+                  type="text"
+                  className="px-2 py-1 text-black rounded-md"
+                  placeholder="Riot ID"
+                  {...register('riot_username')}
+                />
+                {formErrors.riot_username && <span className="text-red-500">{formErrors.riot_username?.message}</span>}
+
                 <label>Discord</label>
                 <input
                   type="text"
@@ -112,12 +123,21 @@ const EditPlayerForm = () => {
                 />
                 {formErrors.twitch && <span className="text-red-500">{formErrors.twitch?.message}</span>}
 
+                <label>Rang</label>
+                <input
+                  type="text"
+                  className="px-2 py-1 text-black rounded-md"
+                  placeholder="Rang"
+                  {...register('rank')}
+                />
+                {formErrors.rank && <span className="text-red-500">{formErrors.rank?.message}</span>}
+
                 <label>Equipe</label>
                 <select
                   className="px-2 py-1 text-black rounded-md"
-                  {...register('pk_team')}
+                  {...register('fk_team')}
                 >
-                  <option value="null">Facultatif</option>
+                  <option value="null">Aucune</option>
                   {teams.map((team) => (
                     <option key={team.pk_team} value={team.pk_team}>{team.name}</option>
                   ))}

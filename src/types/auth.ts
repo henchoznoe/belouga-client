@@ -1,13 +1,13 @@
 export interface Admin {
-  token: string;
-  expiresAt: number;
   username: string;
-  permission: number;
+  token: string; // JWT token
+  expiresAt: number; // When the token expires
+  permission: number; // 2 = SuperAdmin, 1 = Admin
 }
 
 export interface AuthContextType {
-  isAuthenticated: boolean;
-  admin: Admin | null;
-  login: (admin: Admin) => void;
-  logout: () => void;
+  isAuthenticated: boolean; // True if the user is logged in
+  admin: Admin | null; // The logged-in user (also stored in localStorage)
+  login: (admin: Admin) => void; // Login function
+  logout: () => void; // Logout function
 }

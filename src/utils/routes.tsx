@@ -16,6 +16,10 @@ import AddPlayerForm from "@components/admin/players/AddPlayerForm.tsx";
 import AddTeamForm from "@components/admin/teams/AddTeamForm.tsx";
 import SignUp from "@pages/public/SignUp.tsx";
 import AddMatchForm from "@components/admin/matches/AddMatchForm.tsx";
+import EditAdminForm from "@components/admin/admins/EditAdminForm.tsx";
+import EditPlayerForm from "@components/admin/players/EditPlayerForm.tsx";
+import EditTeamForm from "@components/admin/teams/EditTeamForm.tsx";
+import EditMatchForm from "@components/admin/matches/EditMatchForm.tsx";
 
 export const routes: RouteObject[] = [
   {
@@ -57,13 +61,13 @@ export const routes: RouteObject[] = [
               </ProtectedRoute>
             )
           },
-          /*{
+          {
             path: 'admins/edit/:id', element: (
               <ProtectedRoute requiredPermission={2}>
                 <EditAdminForm/>
               </ProtectedRoute>
             )
-          },*/
+          },
           {
             path: 'players', element: (
               <ProtectedRoute requiredPermission={1}>
@@ -78,13 +82,13 @@ export const routes: RouteObject[] = [
               </ProtectedRoute>
             )
           },
-          /*{
+          {
             path: 'players/edit/:id', element: (
               <ProtectedRoute requiredPermission={1}>
                 <EditPlayerForm/>
               </ProtectedRoute>
             )
-          },*/
+          },
           {
             path: 'teams', element: (
               <ProtectedRoute requiredPermission={1}>
@@ -99,13 +103,13 @@ export const routes: RouteObject[] = [
               </ProtectedRoute>
             )
           },
-          /*{
+          {
             path: 'teams/edit/:id', element: (
               <ProtectedRoute requiredPermission={1}>
                 <EditTeamForm/>
               </ProtectedRoute>
             )
-          },*/
+          },
           {
             path: 'matches', element: (
               <ProtectedRoute requiredPermission={1}>
@@ -120,13 +124,13 @@ export const routes: RouteObject[] = [
               </ProtectedRoute>
             )
           },
-          /*{
+          {
             path: 'matches/edit/:id', element: (
               <ProtectedRoute requiredPermission={1}>
                 <EditMatchForm/>
               </ProtectedRoute>
             )
-          }*/
+          }
         ]
       }
     ]

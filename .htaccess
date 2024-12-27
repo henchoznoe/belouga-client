@@ -11,8 +11,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [L]
 
-# Activer le contournement pour POST, PUT, DELETE
-RewriteCond %{REQUEST_METHOD} ^(PUT|DELETE|POST)$
+# Activer le contournement pour POST, PATCH, DELETE
+RewriteCond %{REQUEST_METHOD} ^(PATCH|DELETE|POST)$
 RewriteRule ^ api/index.php [L]
 
 # 3. Désactivation de l'indexation des répertoires

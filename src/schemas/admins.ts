@@ -10,7 +10,7 @@ export type AddAdminFormData = z.infer<typeof addAdminSchema>;
 
 export const editAdminSchema = z.object({
   username: z.string().regex(/^[a-zA-Z0-9._\s-]{1,32}$/, 'Le nom d\'utilisateur doit contenir entre 1 et 32 caractères'),
-  pk_admin_type: z.string().min(1, 'Veuillez sélectionner un type d\'administrateur'),
+  fk_admin_type: z.string().min(1, 'Veuillez sélectionner un type d\'administrateur'),
 });
 
 export type EditAdminFormData = z.infer<typeof editAdminSchema>;

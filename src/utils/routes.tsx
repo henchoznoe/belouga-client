@@ -14,7 +14,7 @@ import ProtectedRoute from "@/utils/ProtectedRoute.tsx";
 import AddAdminForm from "@components/admin/admins/AddAdminForm.tsx";
 import AddPlayerForm from "@components/admin/players/AddPlayerForm.tsx";
 import AddTeamForm from "@components/admin/teams/AddTeamForm.tsx";
-import SignUp from "@pages/public/SignUp.tsx";
+import Register from "@pages/public/Register.tsx";
 import AddMatchForm from "@components/admin/matches/AddMatchForm.tsx";
 import EditAdminForm from "@components/admin/admins/EditAdminForm.tsx";
 import EditPlayerForm from "@components/admin/players/EditPlayerForm.tsx";
@@ -30,7 +30,7 @@ export const routes: RouteObject[] = [
       { path: '/stream', element: <Stream/> },
       { path: '/contact', element: <Contact/> },
       { path: '/login', element: <Login/> },
-      { path: '/signup', element: <SignUp/> },
+      { path: '/signup', element: <Register/> },
       { path: '*', element: <Home/> },
       {
         path: '/admin',

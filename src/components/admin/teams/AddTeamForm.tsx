@@ -65,7 +65,7 @@ const AddTeamForm = () => {
                 type="submit"
                 disabled={isLoading[1]}
               >
-                <span className="font-paladins">{isLoading[2] ? <Spinner color="gray"/> : 'Ajouter'}</span>
+                <span className="font-paladins">{isLoading[1] ? <Spinner color="gray"/> : 'Ajouter'}</span>
               </button>
 
               {errors[1] && (

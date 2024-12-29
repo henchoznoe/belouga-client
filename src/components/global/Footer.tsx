@@ -27,6 +27,7 @@ const Footer = () => {
           </div>
           <hr className="my-4 border-white sm:mx-auto"/>
           <div className="flex justify-center gap-2">
+            <SocialIcon url="https://discord.gg/dmqUVfr4ft" target="_blank"/>
             <SocialIcon url="https://www.twitch.tv/quentadoulive" target="_blank"/>
             <SocialIcon url="https://www.youtube.com/@quentadou9064" target="_blank"/>
             <SocialIcon url="https://www.tiktok.com/@quentadou" target="_blank"/>

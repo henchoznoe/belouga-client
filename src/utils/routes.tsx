@@ -30,7 +30,7 @@ export const routes: RouteObject[] = [
       { path: '/stream', element: <Stream/> },
       { path: '/contact', element: <Contact/> },
       { path: '/login', element: <Login/> },
-      { path: '/signup', element: <Register/> },
+      { path: '/register', element: <Register/> },
       { path: '*', element: <Home/> },
       {
         path: '/admin',

@@ -15,7 +15,7 @@ const Home = () => {
 
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold">📅 Nombre de joueurs maximum :</h3>
+              <h3 className="text-lg font-semibold">🧑‍💻 Nombre de joueurs maximum :</h3>
               <p>40 joueurs (8 équipes de 5).</p>
             </div>
             <div>
@@ -38,13 +38,15 @@ const Home = () => {
                   loser bracket.
                 </li>
               </ul>
+              <h3 className="text-lg font-semibold">🥇️ Le bracket</h3>
+              <img src="/img/bracket.png" alt="Bracket du tournoi"/>
             </div>
           </div>
 
           <div className="mt-6">
             <h3 className="text-lg font-semibold">⚠️ Important :</h3>
             <ul className="list-disc list-inside">
-              <li>Assurez-vous de constituer une équipe complète avant de vous inscrire.</li>
+              <li>Assurez-vous de constituer une équipe complète avant de vous inscrire (si possible)</li>
               <li>Les inscriptions sont limitées aux 40 premières places.</li>
             </ul>
           </div>
@@ -65,7 +67,7 @@ const Home = () => {
             <p className="mt-4">
               Envoyez toutes ces informations via le formulaire prévu aux {" "}
               <NavLink
-                to="/signup"
+                to="/register"
                 className="underline"
               >
                 inscriptions
@@ -76,13 +78,13 @@ const Home = () => {
 
 
         <div className="text-center mt-6">
-          <p className="text-lg font-semibold">
+        <p className="text-lg font-semibold">
             Bonne chance à toutes les équipes et que le meilleur gagne ! 🎯
           </p>
         </div>
 
         <NavLink
-          to="/signup"
+          to="/register"
           className="py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600 hover:scale-105 transition-all"
         >
           S'inscrire au tournoi

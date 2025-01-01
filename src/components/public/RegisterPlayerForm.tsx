@@ -68,11 +68,11 @@ const RegisterPlayerForm = (props: SignUpFormProps) => {
         {form.formState.errors.riot_username &&
           <span className="text-red-500">{form.formState.errors.riot_username?.message}</span>}
 
-        <label>Twitch</label>
+        <label>URL Twitch</label>
         <input
           type="text"
           className="px-2 py-1 text-black rounded-md"
-          placeholder="Twitch"
+          placeholder="https://twitch.tv/xxx"
           {...form.register('twitch')}
         />
         {form.formState.errors.twitch &&

@@ -78,7 +78,7 @@ const Home = () => {
 
 
         <div className="text-center mt-6">
-        <p className="text-lg font-semibold">
+          <p className="text-lg font-semibold">
             Bonne chance à toutes les équipes et que le meilleur gagne ! 🎯
           </p>
         </div>

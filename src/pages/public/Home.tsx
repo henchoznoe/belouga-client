@@ -15,6 +15,10 @@ const Home = () => {
 
           <div className="space-y-4">
             <div>
+              <h3 className="text-lg font-semibold">📅 Date du Belouga Tournament #2</h3>
+              <p>29 et 30 mars 2025</p>
+            </div>
+            <div>
               <h3 className="text-lg font-semibold">🧑‍💻 Nombre de joueurs maximum :</h3>
               <p>40 joueurs (8 équipes de 5).</p>
             </div>
@@ -46,7 +50,7 @@ const Home = () => {
           <div className="mt-6">
             <h3 className="text-lg font-semibold">⚠️ Important :</h3>
             <ul className="list-disc list-inside">
-              <li>Assurez-vous de constituer une équipe complète avant de vous inscrire (si possible)</li>
+            <li>Assurez-vous de constituer une équipe complète avant de vous inscrire (si possible)</li>
               <li>Les inscriptions sont limitées aux 40 premières places.</li>
             </ul>
           </div>

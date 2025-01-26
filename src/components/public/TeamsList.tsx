@@ -31,14 +31,10 @@ const TeamsList = (props: TeamsListProps) => {
           <ul className="">
             {playersWithoutTeam.map((player) => (
               <div key={player.pk_player}>
-                <strong>{player.username}</strong> ({player.rank})
-                <div className="text-sm">
+                <strong>- {player.username}</strong> ({player.rank}) {player.twitch &&
+                <SocialIcon url={player.twitch} className="!size-8"/>}
+                <div className="text-sm italic">
                   Discord : {player.discord}, Riot ID : {player.riot_username}
-                  {player.twitch && (
-                    <span>
-                      , <a href={player.twitch} className="text-blue-500 underline">Twitch</a>
-                    </span>
-                  )}
                 </div>
               </div>
             ))}

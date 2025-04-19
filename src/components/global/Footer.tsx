@@ -11,7 +11,7 @@ const Footer = () => {
               href={import.meta.env.VITE_HOST}
               className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
             >
-              <img src="/img/red-logo.png" className="h-12" alt="BelougaTournament Logo"/>
+              <img src="/img/blue-logo.png" className="h-12" alt="BelougaTournament Logo"/>
               <span className="self-center text-md md:text-xl font-semibold whitespace-nowrap font-paladinsgrad">
                 Belouga Tournament
               </span>

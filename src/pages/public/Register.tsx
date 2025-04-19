@@ -1,17 +1,18 @@
 import Heading from "@components/global/Heading.tsx";
-import RegisterPlayerForm from "@components/public/RegisterPlayerForm.tsx";
-import TeamsList from "@components/public/TeamsList.tsx";
-import { useEffect, useState } from "react";
 import { useFetch } from "@/shared/hooks/useFetch.ts";
-import { GetTeamsWithPlayersType, RegisterTeamDataType, TeamsWithPlayersDataType } from "@/types/register.ts";
+import { RegisterPlayerType } from "@/types/register.ts";
 import { Alert, Spinner } from "flowbite-react";
-import RegisterTeamForm from "@components/public/RegisterTeamForm.tsx";
+import { useForm } from "react-hook-form";
+import { RegisterPlayerFormDataT, registerPlayerSchemaT } from "@/schemas/register.ts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
 
   const { send, isLoading, errors } = useFetch();
 
-  const [teams, setTeams] = useState<TeamsWithPlayersDataType[]>([]);
+  /*const [teams, setTeams] = useState<TeamsWithPlayersDataType[]>([]);
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -21,9 +22,9 @@ const Register = () => {
       if ( teamsRes.success ) setTeams(teamsRes.data);
     }
     fetchTeams();
-  }, [send]);
+  }, [send]);*/
 
-  const onTeamAdded = (addedTeam: RegisterTeamDataType) => {
+  /*const onTeamAdded = (addedTeam: RegisterTeamDataType) => {
     setTeams([...teams, {
       fk_team: addedTeam.pk_team, name: addedTeam.name,
       pk_player: 0,
@@ -33,9 +34,9 @@ const Register = () => {
       twitch: null,
       rank: ""
     }]);
-  };
+  };*/
 
-  const onPlayerAdded = (addedPlayer: TeamsWithPlayersDataType) => {
+  /*const onPlayerAdded = (addedPlayer: TeamsWithPlayersDataType) => {
     setTeams(teams.map((team) => {
       if ( team.fk_team === addedPlayer.fk_team ) {
         return {
@@ -51,12 +52,80 @@ const Register = () => {
       }
       return team;
     }));
+  }*/
+
+  const form = useForm<RegisterPlayerFormDataT>({ resolver: zodResolver(registerPlayerSchemaT) });
+  const navigate = useNavigate();
+
+  const registerPlayerHandler = async (data: RegisterPlayerFormDataT) => {
+    const dataToSend: any = {
+      action: 'registerPlayerTrackmania',
+      ...data
+    };
+    Object.keys(dataToSend).forEach((key) => {
+      if ( dataToSend[key] === "null" || dataToSend[key] === "" ) dataToSend[key] = null;
+    });
+    const res: RegisterPlayerType = await send(1, 'POST', {
+      body: JSON.stringify(dataToSend)
+    });
+
+    if ( res.success ) {
+      toast.success(`Super ! Votre inscription a bien été prise en compte`);
+      form.reset();
+      navigate('/');
+    }
   }
 
   return (
     <>
       <Heading title="Inscriptions"/>
-      {isLoading[1] ? (
+      <div className="bg-zinc-600 p-6 rounded-lg mb-4 container mx-auto">
+
+        <form className="flex flex-col gap-3" onSubmit={form.handleSubmit(registerPlayerHandler)}>
+          <label>Pseudo</label>
+          <input
+            type="text"
+            className="px-2 py-1 text-black rounded-md"
+            placeholder="Nom d'utilisateur"
+            {...form.register('username')}
+          />
+          {form.formState.errors.username &&
+            <span className="text-red-500">{form.formState.errors.username?.message}</span>}
+
+          <label>Discord</label>
+          <input
+            type="text"
+            className="px-2 py-1 text-black rounded-md"
+            placeholder="Discord"
+            {...form.register('discord')}
+          />
+          {form.formState.errors.discord &&
+            <span className="text-red-500">{form.formState.errors.discord?.message}</span>}
+
+          <label>URL Twitch</label>
+          <input
+            type="text"
+            className="px-2 py-1 text-black rounded-md"
+            placeholder="https://twitch.tv/xxx"
+            {...form.register('twitch')}
+          />
+          {form.formState.errors.twitch &&
+            <span className="text-red-500">{form.formState.errors.twitch?.message}</span>}
+
+          <button
+            className="py-2 bg-zinc-500 hover:bg-zinc-700 rounded-md"
+            type="submit"
+            disabled={isLoading[1]}
+          >
+            <span className="font-paladins">{isLoading[1] ? <Spinner color="gray"/> : 'S\'inscrire'}</span>
+          </button>
+
+          {errors[1] && (
+            <Alert color="red">{errors[1]}</Alert>
+          )}
+        </form>
+      </div>
+      {/*{isLoading[1] ? (
         <Alert color="gray">
           <Spinner color="gray"/> Chargement, veuillez patienter...
         </Alert>
@@ -92,7 +161,7 @@ const Register = () => {
             <RegisterPlayerForm teams={teams} onPlayerAdded={onPlayerAdded}/>
           </div>
         </div>
-      )}
+      )}*/}
     </>
   );
 }

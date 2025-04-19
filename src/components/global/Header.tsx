@@ -14,6 +14,7 @@ const Header = () => {
   const authCtx = useAuth();
 
   const menus: HeaderMenu[] = [
+    { label: "Tournois", to: "/tournaments" },
     { label: "Stream", to: "/stream" },
     { label: "Contact", to: "/contact" },
   ];
@@ -24,7 +25,7 @@ const Header = () => {
     <>
       <Navbar fluid className="bg-zinc-800">
         <Navbar.Brand as={Link} href={import.meta.env.VITE_HOST}>
-          <img src="/img/red-logo.png" className="mr-3 h-6 sm:h-9 hidden lg:block" alt="Belouga Tournament Logo"/>
+          <img src="/img/blue-logo.png" className="mr-3 h-6 sm:h-9 hidden lg:block" alt="Belouga Tournament Logo"/>
           <span className="whitespace-nowrap text-lg md:text-xl font-paladins">
             Belouga Tournament
           </span>

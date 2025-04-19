@@ -20,6 +20,7 @@ import EditAdminForm from "@components/admin/admins/EditAdminForm.tsx";
 import EditPlayerForm from "@components/admin/players/EditPlayerForm.tsx";
 import EditTeamForm from "@components/admin/teams/EditTeamForm.tsx";
 import EditMatchForm from "@components/admin/matches/EditMatchForm.tsx";
+import Tournaments from "@pages/public/Tournaments.tsx";
 
 export const routes: RouteObject[] = [
   {
@@ -27,6 +28,7 @@ export const routes: RouteObject[] = [
     element: <RootLayout/>,
     children: [
       { path: '/', element: <Home/> },
+      { path: '/tournaments', element: <Tournaments/> },
       { path: '/stream', element: <Stream/> },
       { path: '/contact', element: <Contact/> },
       { path: '/login', element: <Login/> },

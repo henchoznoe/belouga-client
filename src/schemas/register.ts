@@ -16,3 +16,11 @@ export const registerPlayerSchema = z.object({
 });
 
 export type RegisterPlayerFormData = z.infer<typeof registerPlayerSchema>;
+
+export const registerPlayerSchemaT = z.object({
+  username: z.string().regex(/^.{1,32}$/, 'Le nom d\'utilisateur doit contenir entre 1 et 32 caractères'),
+  discord: z.string().regex(/^.{1,32}$/, 'Le discord doit contenir entre 1 et 32 caractères'),
+  twitch: z.string().optional(),
+});
+
+export type RegisterPlayerFormDataT = z.infer<typeof registerPlayerSchemaT>;

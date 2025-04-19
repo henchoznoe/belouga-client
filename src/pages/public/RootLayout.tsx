@@ -9,7 +9,7 @@ const RootLayout = () => {
   return (
     <ScrollToTop>
       <motion.header
-        className="sticky top-0 z-50 border !border-b-red-500/80 !border-x-zinc-800 !border-t-zinc-800"
+        className="sticky top-0 z-50 border !border-belouga-blue !border-x-zinc-800 !border-t-zinc-800"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100, damping: 12 }}
@@ -20,7 +20,7 @@ const RootLayout = () => {
         <Outlet/>
         <Toaster richColors/>
       </main>
-      <footer className="border !border-t-red-500/80 !border-x-zinc-800 !border-b-zinc-800">
+      <footer className="border !border-t-belouga-blue !border-x-zinc-800 !border-b-zinc-800">
         <Footer/>
       </footer>
     </ScrollToTop>

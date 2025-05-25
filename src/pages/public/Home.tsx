@@ -5,12 +5,16 @@ import { useEffect, useState } from "react";
 import { PlayersDataType } from "@/types/players.ts";
 import { Alert, Spinner } from "flowbite-react";
 import { SocialIcon } from "react-social-icons";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 const Home = () => {
 
   const { send, isLoading, errors } = useFetch();
-
   const [players, setPlayers] = useState<PlayersDataType[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const playersPerPage = 4;
+  const totalPages = Math.ceil(players.length / playersPerPage);
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -18,9 +22,13 @@ const Home = () => {
         params: 'action=getPlayersT'
       });
       if ( playersRes.success ) setPlayers(playersRes.data);
-    }
+    };
     fetchPlayers();
   }, [send]);
+
+  const indexOfLast = currentPage * playersPerPage;
+  const indexOfFirst = indexOfLast - playersPerPage;
+  const currentPlayers = players.slice(indexOfFirst, indexOfLast);
 
   return (
     <>
@@ -118,16 +126,34 @@ const Home = () => {
         ) : players.length > 0 ? (
           <div className="w-full max-w-3xl p-4 rounded-lg">
             <h2 className="text-2xl font-bold text-center mb-4 font-paladinsgrad">Joueurs déjà inscrits</h2>
-            <div className="flex flec-col gap-3">
-              {players.map((player) => (
+            <div className="flex justify-center items-center gap-4 mb-4">
+              <button
+                className="bg-belouga-blue text-white rounded-full hover:bg-belouga-blue/80 cursor-pointer p-2"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+              >
+                <ArrowLeftIcon className="size-6"/>
+              </button>
+              <span className="text-white">
+                {currentPage} / {totalPages}
+              </span>
+              <button
+                className="bg-belouga-blue text-white rounded-full hover:bg-belouga-blue/80 cursor-pointer p-2"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                <ArrowRightIcon className="size-6"/>
+              </button>
+            </div>
+            <div className="flex flex-col gap-3">
+              {currentPlayers.map((player) => (
                 <div key={player.pk_player} className="flex justify-between items-center bg-zinc-600 p-4 rounded-lg w-full">
                   <div className="text-sm italic">
                     <strong>Pseudo : {player.username}</strong><br/>
                     Discord : {player.discord}
                   </div>
                   <div>
-                    {player.twitch &&
-                      <SocialIcon url={player.twitch} className="!size-8"/>}
+                    {player.twitch && <SocialIcon url={player.twitch} className="!size-8"/>}
                   </div>
                 </div>
               ))}
